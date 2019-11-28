@@ -16,7 +16,8 @@ current_branch=`git rev-parse --abbrev-ref HEAD`
 branch_name=${1// /_}
 if [ "$current_branch" = 'master' ]
 then
-	git checkout -b "${branch_name}" || exit $?
+	git branch --unset-upstream || exit $?
+	git branch -m "${current_branch}" "${branch_name}" || exit $?
 	myCommit "$1" "do-pull-request"
 else
 	if [ "$current_branch" = "$branch_name" ]
